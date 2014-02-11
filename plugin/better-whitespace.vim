@@ -78,6 +78,21 @@ function! s:StripWhitespace( line1, line2 )
     call cursor(l, c)
 endfunction
 
+" Toggle highlighting of all tabs in file
+function! s:ToggleTab()
+    if g:tab_highlighting_enabled == 0
+        let g:tab_highlighting_enabled = 1
+    else
+        let g:tab_highlighting_enabled = 0
+    endif
+
+    " Refresh highlighting
+    if g:better_whitespace_enabled == 1
+        call <SID>DisableWhitespace()
+        call <SID>EnableWhitespace()
+    endif
+endfunction
+
 " Run :StripWhitespace to remove end of line white space
 command! -range=% StripWhitespace call <SID>StripWhitespace( <line1>, <line2> )
 " Run :EnableWhitespace to enable whitespace highlighting
@@ -86,6 +101,8 @@ command! EnableWhitespace call <SID>EnableWhitespace()
 command! DisableWhitespace call <SID>DisableWhitespace()
 " Run :ToggleWhitespace to toggle whitespace highlighting on/off
 command! ToggleWhitespace call <SID>ToggleWhitespace()
+" Run :ToggleTabWhitespace to toggle tab highlighting on/off
+command! ToggleTab call <SID>ToggleTab()
 
 " Process auto commands upon load
 autocmd VimEnter,WinEnter,BufEnter,FileType * call <SID>RunAutoCommands()
