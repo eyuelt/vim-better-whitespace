@@ -190,3 +190,5 @@ function! <SID>RunAutoCommands()
 
     augroup END
 endfunction
+
+call <SID>RunAutoCommands()
