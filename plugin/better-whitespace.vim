@@ -1,5 +1,5 @@
-" Author: Nate Peterson
-" Repository: https://github.com/ntpeters/vim-better-whitespace
+" Original Author: Nate Peterson
+" Original Repository: https://github.com/ntpeters/vim-better-whitespace
 
 " Prevent loading the plugin multiple times
 if exists( "g:loaded_better_whitespace_plugin" )
@@ -63,7 +63,7 @@ function! s:ToggleWhitespace()
     endif
 endfunction
 
-" Removes all extaneous whitespace in the file
+" Removes all extraneous whitespace in the file
 function! s:StripWhitespace( line1, line2 )
     " Save the current search and cursor position
     let _s=@/
@@ -93,7 +93,7 @@ function! s:ToggleTab()
     endif
 endfunction
 
-" Run :StripWhitespace to remove end of line white space
+" Run :StripWhitespace to remove end of line whitespace
 command! -range=% StripWhitespace call <SID>StripWhitespace( <line1>, <line2> )
 " Run :EnableWhitespace to enable whitespace highlighting
 command! EnableWhitespace call <SID>EnableWhitespace()
@@ -121,14 +121,14 @@ function! <SID>RunAutoCommands()
             if g:tab_highlighting_enabled == 0
                 " Highlight all whitespace upon entering buffer
                 autocmd BufWinEnter * match ExtraWhitespace /\(\s\+$\)/
-                " When in insert mode, do not highlight whitespae on the current line
+                " When in insert mode, do not highlight whitespace on the current line
                 autocmd InsertEnter,CursorMovedI * exe 'match ExtraWhitespace ' . '/\%<' . line(".") .  'l\(\s\+$\)\|\%>' . line(".") .  'l\(\s\+$\)/'
                 " Highlight all whitespace when exiting insert mode
                 autocmd InsertLeave,BufReadPost * match ExtraWhitespace /\(\s\+$\)/
             else
                 " Highlight all whitespace upon entering buffer
                 autocmd BufWinEnter * match ExtraWhitespace /\(\s\+$\)\|\(\t\+\)/
-                " When in insert mode, do not highlight whitespae on the current line
+                " When in insert mode, do not highlight whitespace on the current line
                 autocmd InsertEnter,CursorMovedI * exe 'match ExtraWhitespace ' . '/\%<' . line(".") .  'l\(\(\s\+$\)\|\(\t\+\)\)\|\%>' . line(".") .  'l\(\(\s\+$\)\|\(\t\+\)\)/'
                 " Highlight all whitespace when exiting insert mode
                 autocmd InsertLeave,BufReadPost * match ExtraWhitespace /\(\s\+$\)\|\(\t\+\)/
