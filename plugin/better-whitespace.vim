@@ -11,9 +11,6 @@ endif
 " Set this to enable/disable whitespace highlighting
 let g:better_whitespace_enabled = 1
 
-" Set this to enable stripping whitespace on file save
-let g:strip_whitespace_on_save = 0
-
 " Only init once
 let s:better_whitespace_initialized = 0
 
@@ -72,20 +69,8 @@ function! s:StripWhitespace( line1, line2 )
     call cursor(l, c)
 endfunction
 
-" Strips whitespace on file save
-function! s:ToggleStripWhitespaceOnSave()
-    if g:strip_whitespace_on_save == 0
-        let g:strip_whitespace_on_save = 1
-    else
-        let g:strip_whitespace_on_save = 0
-    endif
-    call <SID>RunAutoCommands()
-endfunction
-
 " Run :StripWhitespace to remove end of line white space
 command! -range=% StripWhitespace call <SID>StripWhitespace( <line1>, <line2> )
-" Run :ToggleStripWhitespaceOnSave to enable/disable whitespace stripping on save
-command! ToggleStripWhitespaceOnSave call <SID>ToggleStripWhitespaceOnSave()
 " Run :EnableWhitespace to enable whitespace highlighting
 command! EnableWhitespace call <SID>EnableWhitespace()
 " Run :DisableWhitespace to disable whitespace highlighting
@@ -115,11 +100,6 @@ function! <SID>RunAutoCommands()
             autocmd InsertLeave,BufReadPost * match ExtraWhitespace /\s\+$/
             " Clear whitespace highlighting when leaving buffer
             autocmd BufWinLeave * call clearmatches()
-        endif
-
-        " Strip whitespace on save if enabled
-        if g:strip_whitespace_on_save == 1
-            autocmd BufWritePre * call <SID>StripWhitespace( 0, line("$") )
         endif
 
     augroup END
